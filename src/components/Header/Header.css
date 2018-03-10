@@ -1,2 +1,20 @@
-.Header {
-  background: pink; }
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  border-bottom: 1px solid #e4e4e4; }
+
+.navItem {
+  display: inline-flex;
+  align-items: center;
+  color: #484848;
+  height: 80px;
+  padding: 0 8px;
+  border-bottom: 2px solid transparent; }
+  .navItem:hover {
+    border-bottom-color: #767676;
+    color: #484848;
+    text-decoration: none; }
+
+:global a.active {
+  border-bottom-color: #767676; }
