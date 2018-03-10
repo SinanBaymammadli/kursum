@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
+import s from "./Header.css";
+
 class Header extends Component {
   render() {
     return (
-      <div>
+      <header className={s.Header}>
         <ul>
           <li>
             <Link to="/">Home</Link>
@@ -19,7 +21,7 @@ class Header extends Component {
             <Link to="/dashboard">Dashboard</Link>
           </li>
         </ul>
-      </div>
+      </header>
     );
   }
 }

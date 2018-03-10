@@ -1,6 +1,8 @@
-@import "~bootstrap/dist/css/bootstrap.css";
+// @import "bootstrap/dist/css/bootstrap.css";
 
-.container-fluid {
-  max-width: 1200px;
-  margin: 0 auto;
+:global {
+  .container-fluid {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 }
