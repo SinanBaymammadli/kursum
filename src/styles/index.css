@@ -1,0 +1,4 @@
+@import url(~bootstrap/dist/css/bootstrap.css);
+.container-fluid {
+  max-width: 1200px;
+  margin: 0 auto; }

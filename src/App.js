@@ -10,7 +10,10 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <Header />
-          <Router />
+
+          <main className="container-fluid">
+            <Router />
+          </main>
         </div>
       </BrowserRouter>
     );
