@@ -6,8 +6,6 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Dashboard from "./pages/Dashboard/Dashboard";
 
-const isLoggedIn = false;
-
 const UserRoute = ({ component: Component, isLoggedIn, ...rest }) => (
   <Route
     {...rest}
@@ -43,14 +41,18 @@ class Router extends Component {
     return (
       <Switch>
         <Route path="/" exact component={Home} />
-        <GuestRoute isLoggedIn={isLoggedIn} path="/login" component={Login} />
         <GuestRoute
-          isLoggedIn={isLoggedIn}
+          isLoggedIn={this.props.isAuthenticated}
+          path="/login"
+          component={Login}
+        />
+        <GuestRoute
+          isLoggedIn={this.props.isAuthenticated}
           path="/register"
           component={Register}
         />
         <UserRoute
-          isLoggedIn={isLoggedIn}
+          isLoggedIn={this.props.isAuthenticated}
           path="/dashboard"
           component={Dashboard}
         />

@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import { BrowserRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
 import Router from "./Router";
 import Header from "./components/Header/Header";
-// import "bootstrap/dist/css/bootstrap.css";
 
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
         <div>
-          <Header />
+          <Header isAuthenticated={this.props.isAuthenticated} />
           <main className="container-fluid">
-            <Router />
+            <Router isAuthenticated={this.props.isAuthenticated} />
           </main>
         </div>
       </BrowserRouter>
@@ -20,4 +20,6 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => state.auth;
+
+export default connect(mapStateToProps, null)(App);

@@ -1,41 +1,87 @@
 import React, { Component } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import axios from "axios";
 
 class RegisterForm extends Component {
+  state = {
+    data: {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: ""
+    },
+    errors: ""
+  };
+
+  fieldChanged = e => {
+    this.setState({
+      data: {
+        ...this.state.data,
+        [e.target.name]: e.target.value
+      }
+    });
+  };
+
+  onSubmit = e => {
+    if (e.target.checkValidity()) {
+      e.preventDefault();
+      axios.post("/api/register", this.state.data).then(res => {
+        console.log(res.data);
+      });
+    }
+  };
+
   render() {
+    const { name, email, password, confirmPassword } = this.state.data;
+
     return (
-      <Form>
+      <Form onSubmit={this.onSubmit}>
         <FormGroup>
-          <Label for="exampleEmail">Email</Label>
+          <Label for="name">Name</Label>
+          <Input
+            name="name"
+            id="name"
+            placeholder="Name"
+            value={name}
+            onChange={this.fieldChanged}
+            required
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for="email">Email</Label>
           <Input
             type="email"
             name="email"
-            id="exampleEmail"
-            placeholder="with a placeholder"
+            id="email"
+            placeholder="Email"
+            value={email}
+            onChange={this.fieldChanged}
+            required
           />
         </FormGroup>
         <FormGroup>
-          <Label for="examplePassword">Password</Label>
+          <Label for="password">Password</Label>
           <Input
             type="password"
             name="password"
-            id="examplePassword"
-            placeholder="password placeholder"
+            id="password"
+            placeholder="Password"
+            value={password}
+            onChange={this.fieldChanged}
+            required
           />
         </FormGroup>
         <FormGroup>
-          <Label for="examplePassword">Password</Label>
+          <Label for="confirmPassword">Confirm Password</Label>
           <Input
             type="password"
-            name="password"
-            id="examplePassword"
-            placeholder="password placeholder"
+            name="confirmPassword"
+            id="confirmPassword"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={this.fieldChanged}
+            required
           />
-        </FormGroup>
-        <FormGroup check>
-          <Label check>
-            <Input type="checkbox" /> Check me out
-          </Label>
         </FormGroup>
         <Button>Submit</Button>
       </Form>
