@@ -27,9 +27,16 @@ export function logUserOut() {
   };
 }
 
-export function logout(data) {
+export function logout() {
+  const token = localStorage.getItem("userToken");
   return dispatch => {
-    localStorage.removeItem("userToken");
-    dispatch(logUserOut());
+    return axios.get("api/logout", { params: { token } }).then(res => {
+      if (res.data.success) {
+        localStorage.removeItem("userToken");
+        dispatch(logUserOut());
+      } else {
+      }
+      console.log(res.data);
+    });
   };
 }

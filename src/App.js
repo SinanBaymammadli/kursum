@@ -11,7 +11,7 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <Header isAuthenticated={this.props.isAuthenticated} />
-          <main className="container-fluid">
+          <main className="container-fluid main">
             <Router isAuthenticated={this.props.isAuthenticated} />
           </main>
         </div>

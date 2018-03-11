@@ -2,11 +2,27 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import {
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from "reactstrap";
 
 import { logout } from "../../actions/auth";
 import s from "./Header.css";
 
 class Header extends Component {
+  state = {
+    dropdownOpen: false
+  };
+
+  toggle = () => {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen
+    });
+  };
+
   render() {
     let nav;
 
@@ -20,9 +36,20 @@ class Header extends Component {
             Dashboard
           </NavLink>
 
-          <button onClick={this.props.logout} className={s.navItem}>
-            Logout
-          </button>
+          <Dropdown
+            className={s.navItem}
+            isOpen={this.state.dropdownOpen}
+            toggle={this.toggle}
+          >
+            <DropdownToggle caret>Dropdown</DropdownToggle>
+            <DropdownMenu right>
+              <DropdownItem>Another Action</DropdownItem>
+              <DropdownItem>Another Action</DropdownItem>
+              <DropdownItem>Another Action</DropdownItem>
+              <DropdownItem divider />
+              <DropdownItem onClick={this.props.logout}>Logout</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
         </nav>
       );
     } else {
