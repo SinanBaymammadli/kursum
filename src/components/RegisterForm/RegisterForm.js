@@ -1,92 +1,52 @@
-import React, { Component } from "react";
-import { Button, Form, FormGroup, Label, Input } from "reactstrap";
-import axios from "axios";
+import React from "react";
+import { Button, Form } from "reactstrap";
+import { reduxForm, Field } from "redux-form";
 
-class RegisterForm extends Component {
-  state = {
-    data: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: ""
-    },
-    errors: ""
-  };
+import {
+  required,
+  maxLength,
+  minLength,
+  email,
+  match
+} from "../../helpers/formValidation";
+import FormField from "../FormField/FormField";
 
-  fieldChanged = e => {
-    this.setState({
-      data: {
-        ...this.state.data,
-        [e.target.name]: e.target.value
-      }
-    });
-  };
+let RegisterForm = ({ handleSubmit, submitting, pristine, onSubmit }) => (
+  <Form onSubmit={handleSubmit(onSubmit)}>
+    <Field
+      name="name"
+      label="Name"
+      component={FormField}
+      validate={[required, maxLength(20), minLength(3)]}
+    />
+    <Field
+      type="email"
+      name="email"
+      label="Email"
+      component={FormField}
+      validate={[required, email]}
+    />
+    <Field
+      type="password"
+      name="password"
+      label="Password"
+      component={FormField}
+      validate={[required, minLength(6)]}
+    />
+    <Field
+      type="password"
+      name="confirmPassword"
+      label="Confirm Password"
+      component={FormField}
+      validate={[required, match("password")]}
+    />
+    <Button disabled={submitting || pristine}>Submit</Button>
+  </Form>
+);
 
-  onSubmit = e => {
-    if (e.target.checkValidity()) {
-      e.preventDefault();
-      axios.post("/api/register", this.state.data).then(res => {
-        console.log(res.data);
-      });
-    }
-  };
-
-  render() {
-    const { name, email, password, confirmPassword } = this.state.data;
-
-    return (
-      <Form onSubmit={this.onSubmit}>
-        <FormGroup>
-          <Label for="name">Name</Label>
-          <Input
-            name="name"
-            id="name"
-            placeholder="Name"
-            value={name}
-            onChange={this.fieldChanged}
-            required
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for="email">Email</Label>
-          <Input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Email"
-            value={email}
-            onChange={this.fieldChanged}
-            required
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for="password">Password</Label>
-          <Input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Password"
-            value={password}
-            onChange={this.fieldChanged}
-            required
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for="confirmPassword">Confirm Password</Label>
-          <Input
-            type="password"
-            name="confirmPassword"
-            id="confirmPassword"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={this.fieldChanged}
-            required
-          />
-        </FormGroup>
-        <Button>Submit</Button>
-      </Form>
-    );
-  }
-}
+RegisterForm = reduxForm({
+  form: "register",
+  destroyOnUnmount: false
+})(RegisterForm);
 
 export default RegisterForm;
